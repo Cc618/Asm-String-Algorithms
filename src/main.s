@@ -1,58 +1,48 @@
-.text							
-STR_HW:							
-	.ascii "Hello, world!\12\0"	
+# In this program, all strings are terminated by a null char ('\0')
 
-STR_PRINT_PTR:
-	.ascii "StrA: %s, StrB: %s\nLength of a: %i\0"
+.text
 
 STR_A:
 	.ascii "Hello World!\0"
 
-STR_B:
-	.ascii "Hello World!\0"
+STR_PRINT_RESULT:
+	.ascii "Result: %u\n\0"
 
-STR_DBG:
-	.ascii "Debug: %i\n\0"
-
-STR_DBG_C:
-	.ascii "Debug: %c\n\0"
-
-STR_TRACE:
-	.ascii "---\n\0"
-
-
-
-STR_PRINT_EAX:
-	.ascii "Eax: %i\n\0"
 
 .globl _main					
 _main:
-	pushl   %ebp		
-	movl    %esp, %ebp	
-	subl    $8, %esp	
+	#### Prolog ####
+	pushl   %ebp
+	movl    %esp, %ebp
+	subl    $8, %esp
 
+	# Alignement
 	andl    $-16, %esp	
 
-	movl    $0, %eax
+	# -4(%ebp) = 0
+	xorl    %eax, %eax
 	movl    %eax, -4(%ebp)
-	movl    -4(%ebp), %eax		
 
+	# Standard library init
 	call    __alloca
 	call    ___main
 
-	
-	movl $STR_A, (%esp)
-	call stringLen
 
-	############ Affichage ##############
-	movl %eax, 12(%esp)
-	movl $STR_B, 8(%esp)
-	movl $STR_A, 4(%esp)
-	movl $STR_PRINT_PTR, (%esp)
+	#### Algorithm ####
+	# %eax = The string length of STR_A
+	movl $STR_A, (%esp)
+	call stringLength
+
+
+	#### Display ####
+	movl %eax, 4(%esp)
+	movl $STR_PRINT_RESULT, (%esp)
 	call _printf
 
 
-	movl    $0, %eax		
+	##### Epilog ####
+	# Return 0
+	xorl	%eax, %eax		
 
-	leave				
+	leave			
 	ret

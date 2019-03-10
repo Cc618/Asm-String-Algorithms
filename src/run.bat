@@ -1,7 +1,5 @@
-:: To launch the app with a pause at end
+:: To launch the app
 
 @echo off
 
 main
-
-pause
