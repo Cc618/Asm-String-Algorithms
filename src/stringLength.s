@@ -11,7 +11,7 @@ stringLength:
 
 
 	#### Algorithm ####
-	#	Local variables: (you can see more easily in tests/tests.c/stringLength)
+	#	Local variables: (you can see more easily in tests/tests.c/stringLengthASM)
 	# - length, 4(%ebp), unsigned int : The length of the string
 
 	# length = 0

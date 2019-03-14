@@ -5,6 +5,9 @@
 STR_A:
 	.ascii "Hello World!\0"
 
+STR_B:
+	.ascii "Hello World!\0"
+
 STR_PRINT_RESULT:
 	.ascii "Result: %u\n\0"
 
@@ -29,9 +32,10 @@ _main:
 
 
 	#### Algorithm ####
-	# %eax = The string length of STR_A
+	# %eax = The result
+	movl $STR_B, 4(%esp)
 	movl $STR_A, (%esp)
-	call stringLength
+	call stringEqual
 
 
 	#### Display ####

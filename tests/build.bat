@@ -3,3 +3,5 @@
 @echo off
 
 gcc -o tests main.c
+
+pause
